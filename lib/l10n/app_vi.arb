@@ -1,0 +1,14 @@
+{
+    "appTitle": "AI Detector",
+    "loginTitle": "Deepfake Detector",
+    "loginSubtitle": "Bảo vệ sự thật trong kỷ nguyên AI",
+    "emailLabel": "Địa chỉ Email",
+    "passwordLabel": "Mật khẩu",
+    "loginButton": "Đăng nhập",
+    "guestButton": "Dùng thử (Không cần tài khoản)",
+    "emailErrorEmpty": "Vui lòng nhập Email",
+    "emailErrorInvalid": "Email không hợp lệ",
+    "passwordErrorShort": "Mật khẩu phải trên 6 ký tự",
+    "errorLogin": "Đăng nhập thất bại",
+    "settingsLanguage": "Ngôn ngữ"
+}

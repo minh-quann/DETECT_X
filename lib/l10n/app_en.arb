@@ -1,0 +1,14 @@
+{
+    "appTitle": "AI Detector",
+    "loginTitle": "Deepfake Detector",
+    "loginSubtitle": "Protect truth in the AI era",
+    "emailLabel": "Email Address",
+    "passwordLabel": "Password",
+    "loginButton": "Login",
+    "guestButton": "Try as Guest (No Account)",
+    "emailErrorEmpty": "Please enter your email",
+    "emailErrorInvalid": "Invalid email format",
+    "passwordErrorShort": "Password must be at least 6 characters",
+    "errorLogin": "Login Failed",
+    "settingsLanguage": "Language"
+}
