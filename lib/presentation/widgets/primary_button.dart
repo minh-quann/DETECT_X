@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../core/theme/liquid_theme.dart';
+
 class PrimaryButton extends StatelessWidget {
   final String title;
   final VoidCallback onPressed;
   final bool isLoading;
   final IconData? icon;
+  final bool expand;
 
   const PrimaryButton({
     super.key,
@@ -12,47 +15,85 @@ class PrimaryButton extends StatelessWidget {
     required this.onPressed,
     this.isLoading = false,
     this.icon,
+    this.expand = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 56,
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).primaryColor.withOpacity(0.4),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: ElevatedButton(
-        onPressed: isLoading ? null : onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).primaryColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          elevation: 0,
-        ),
-        child: isLoading
-            ? const SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(
-                color: Colors.white, 
-                strokeWidth: 2,
-              ),
+    final liquidTheme = Theme.of(context).extension<LiquidTheme>();
+    final gradient =
+        liquidTheme?.accentSurfaceGradient ??
+        LinearGradient(
+          colors: [
+            Theme.of(context).primaryColor,
+            Theme.of(context).primaryColor.withValues(alpha: 0.8),
+          ],
+        );
+
+    final buttonChild = isLoading
+        ? const SizedBox(
+            width: 24,
+            height: 24,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              color: Colors.white,
+            ),
           )
-          : Row(
+        : Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              if(icon != null) ...[Icon(icon), const SizedBox(width: 8)],
-              Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+              if (icon != null) ...[
+                Icon(icon, color: Colors.white),
+                const SizedBox(width: 8),
+              ],
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+              ),
             ],
-          )
+          );
+
+    final button = SizedBox(
+      height: 56,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: gradient,
+          borderRadius: BorderRadius.circular(32),
+          boxShadow: [
+            BoxShadow(
+              color: (liquidTheme?.glowColor ?? Theme.of(context).primaryColor)
+                  .withValues(alpha: 0.35),
+              blurRadius: 25,
+              offset: const Offset(0, 18),
+            ),
+          ],
+        ),
+        child: ElevatedButton(
+          onPressed: isLoading ? null : onPressed,
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32),
+            ),
+            backgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent,
+          ),
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 200),
+            child: buttonChild,
+          ),
+        ),
       ),
     );
-  } 
+
+    if (expand) {
+      return SizedBox(width: double.infinity, child: button);
+    }
+
+    return button;
+  }
 }

@@ -17,10 +17,18 @@ class AuthLoginRequested extends AuthEvent {
 }
 
 class AuthGuestRequested extends AuthEvent {}
+
 class AuthLogoutRequested extends AuthEvent {}
 
 //STATES
-enum AuthStatus { unknown, authenticated, guest, unauthenticated, loading, error }
+enum AuthStatus {
+  unknown,
+  authenticated,
+  guest,
+  unauthenticated,
+  loading,
+  error,
+}
 
 class AuthState extends Equatable {
   final AuthStatus status;
@@ -30,23 +38,25 @@ class AuthState extends Equatable {
   const AuthState.unknown() : this._();
   const AuthState.authenticated() : this._(status: AuthStatus.authenticated);
   const AuthState.guest() : this._(status: AuthStatus.guest);
-  const AuthState.unauthenticated() : this._(status: AuthStatus.unauthenticated);
+  const AuthState.unauthenticated()
+    : this._(status: AuthStatus.unauthenticated);
   // Add loading and failure states
   const AuthState.loading() : this._(status: AuthStatus.loading);
-  const AuthState.failure(String error) : this._(status: AuthStatus.error, errorMessage: error);
+  const AuthState.failure(String error)
+    : this._(status: AuthStatus.error, errorMessage: error);
   @override
   List<Object?> get props => [status, errorMessage];
 }
-//BLOC
-class AuthBloc extends Bloc<AuthEvent, AuthState>{
-  AuthBloc() : super(const AuthState.unknown()){
 
+//BLOC
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  AuthBloc() : super(const AuthState.unknown()) {
     on<AuthLoginRequested>((event, emit) async {
-      emit(const AuthState.loading()); 
+      emit(const AuthState.loading());
 
       try {
         // Tầng Repository (gọi API PostgreSQL) sẽ nằm ở đây
-        await Future.delayed(const Duration(seconds: 2)); 
+        await Future.delayed(const Duration(seconds: 2));
 
         // Logic kiểm tra dữ liệu đầu vào (Validation)
         if (event.email.isEmpty || event.password.length < 6) {

@@ -7,7 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/theme/app_theme.dart';
 import 'logic/theme/theme_cubit.dart';
 import 'logic/auth/auth_bloc.dart';
-import 'logic/language/language_cubit.dart'; 
+import 'logic/language/language_cubit.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,18 +26,17 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {
-
           return BlocBuilder<LanguageCubit, Locale>(
             builder: (context, locale) {
               return MaterialApp(
-                title: 'AI Detector', 
+                title: 'AI Detector',
                 debugShowCheckedModeBanner: false,
-                theme: AppTheme.LightTheme,
-                darkTheme: AppTheme.DarkTheme,
+                theme: AppTheme.lightTheme,
+                darkTheme: AppTheme.darkTheme,
                 themeMode: themeMode,
-                
+
                 //LANGUAGE CONFIGURATION
-                locale: locale,  
+                locale: locale,
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,
@@ -48,8 +47,8 @@ class MyApp extends StatelessWidget {
                   Locale('en'), // English
                   Locale('vi'), // Vietnamese
                 ],
-                // ---------------------------
 
+                // ---------------------------
                 home: const AppNavigator(),
               );
             },
@@ -59,7 +58,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 class AppNavigator extends StatelessWidget {
   const AppNavigator({super.key});
@@ -72,10 +70,10 @@ class AppNavigator extends StatelessWidget {
           case AuthStatus.authenticated:
           case AuthStatus.guest:
             //
-            return const HomeScreen(); 
+            return const HomeScreen();
           default:
             //
-            return const LoginScreen(); 
+            return const LoginScreen();
         }
       },
     );
